@@ -132,6 +132,29 @@
       margin: 15px 0;
       color: #2c3e50;
     }
+
+    /* Стиль для кнопки "Начать" */
+    .start-btn {
+      padding: 14px 32px;
+      font-size: 18px;
+      font-weight: 500;
+      background: #54332B;
+      color: #E9D2C0;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 30px 0 10px;
+      box-shadow: 0 6px 12px rgba(84, 51, 43, 0.3);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .start-btn:hover {
+      background: #3d2620;
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(84, 51, 43, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -139,7 +162,8 @@
   <img src="https://via.placeholder.com/120/3498db/ffffff?text=LOGO" alt="Логотип" class="logo" id="logo"/>
   <h1 id="title">Выбери свой стиль</h1>
 
-  <div class="categories" id="categories">
+  <!-- Категории изначально скрыты -->
+  <div class="categories" id="categories" style="display: none;">
     <button class="cat-btn" data-cat="street">Street Style</button>
     <button class="cat-btn" data-cat="oldmoney">Old Money</button>
     <button class="cat-btn" data-cat="minimal">Minimalist</button>
@@ -147,6 +171,10 @@
     <button class="cat-btn" data-cat="casual">Casual</button>
   </div>
 
+  <!-- Кнопка "Начать" -->
+  <button class="start-btn" id="startBtn">Начать</button>
+
+  <!-- Основной интерфейс (появляется после выбора категории) -->
   <div id="app" style="display: none; width: 100%;">
     <div class="category-title" id="categoryTitle"></div>
     <img src="" alt="Outfit" class="outfit" id="outfitImg"/>
@@ -167,6 +195,13 @@
     // Инициализация Telegram WebApp
     const tg = window.Telegram?.WebApp;
     tg.expand(); // Раскрыть на весь экран
+
+    // Показать категории при нажатии на "Начать"
+    document.getElementById('startBtn').addEventListener('click', () => {
+      document.getElementById('categories').style.display = 'flex';
+      document.getElementById('startBtn').style.display = 'none';
+      document.getElementById('title').textContent = 'Выбери стиль';
+    });
 
     // Твой логотип (замени на свою ссылку)
     document.getElementById('logo').src = 'https://i.imgur.com/dY4gYtZ.png';
