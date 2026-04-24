@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Style Picker</title>
+  <title>Style Picker — Парень или Девушка</title>
   <style>
     * {
       margin: 0;
@@ -13,7 +13,7 @@
     }
 
     body {
-      background: #E9D2C0;
+      background: linear-gradient(135deg, #E9D2C0 0%, #d4b9a7 100%);
       color: #333;
       min-height: 100vh;
       display: flex;
@@ -25,7 +25,7 @@
     .logo {
       width: 150px;
       height: 150px;
-      margin: 60px 0 30px;
+      margin: 40px 0 20px;
       border-radius: 50%;
       object-fit: cover;
       border: 5px solid #000;
@@ -39,9 +39,84 @@
 
     h1 {
       font-size: 28px;
-      margin-bottom: 30px;
-      color: #8d7361;
+      margin-bottom: 20px;
+      color: #5a3e2e;
       text-align: center;
+    }
+
+    /* Экран выбора пола */
+    .gender-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .gender-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0;
+    }
+
+    .gender-btn {
+      padding: 20px 40px;
+      font-size: 24px;
+      font-weight: bold;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      min-width: 200px;
+    }
+
+    .gender-boy {
+      background: #3d2900;
+      color: white;
+    }
+
+    .gender-girl {
+      background: #3d2900;
+      color: white;
+    }
+
+    .gender-btn:hover {
+      transform: translateY(-5px);
+      filter: brightness(1.05);
+    }
+
+    .gender-btn:active {
+      transform: translateY(0);
+    }
+
+    .gender-emoji {
+      font-size: 48px;
+    }
+
+    /* Выбор стилей (изначально скрыт) */
+    .style-screen {
+      display: none;
+      width: 100%;
+      padding: 20px;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .selected-gender-badge {
+      background: rgba(0,0,0,0.3);
+      padding: 8px 20px;
+      border-radius: 40px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: #fff;
     }
 
     .categories {
@@ -50,50 +125,24 @@
       justify-content: center;
       gap: 15px;
       margin: 20px;
-      max-width: 500px;
+      max-width: 600px;
     }
 
     .cat-btn {
       padding: 12px 24px;
-      background: #c9bbae;
+      background: #8d7361;
       color: white;
       border: none;
       border-radius: 25px;
       font-size: 16px;
       cursor: pointer;
       transition: 0.3s;
-      box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
     .cat-btn:hover {
-      background: #c9bbae;
+      background: #6d5544;
       transform: translateY(-2px);
-    }
-
-    .start-btn {
-      padding: 15px 40px;
-      font-size: 18px;
-      color: #8d7361;
-      background: #8d7361;
-      color: white;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      margin-top: 20px;
-      transition: 0.3s;
-    }
-
-    .start-btn:hover {
-      background: #8d7361;
-      transform: scale(1.05);
-    }
-
-    .app {
-      display: none;
-      width: 100%;
-      padding: 20px;
-      align-items: center;
-      flex-direction: column;
     }
 
     .outfit {
@@ -161,7 +210,7 @@
     .links a {
       display: block;
       margin: 10px 0;
-      color: #3498db;
+      color: #2980b9;
       text-decoration: none;
       font-weight: 500;
     }
@@ -174,32 +223,58 @@
       font-size: 22px;
       margin: 20px 0;
       color: #2c3e50;
+      font-weight: bold;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      padding: 10px 25px;
+      background: #5a3e2e;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #3e2a1f;
     }
   </style>
 </head>
 <body>
 
-  <!-- Логотип -->
-  <img src="https://via.placeholder.com/150" alt="Логотип" class="logo" id="logo"/>
+  <img src="https://i.imgur.com/dY4gYtZ.png" alt="Логотип" class="logo" id="logo"/>
 
-  <!-- Заголовок -->
-  <h1 id="title">Выбери свой стиль</h1>
-
-  <!-- Категории -->
-  <div class="categories" id="categories">
-    <button class="cat-btn" data-cat="street">Street Style</button>
-    <button class="cat-btn" data-cat="oldmoney">Old Money</button>
-    <button class="cat-btn" data-cat="minimal">Minimalist</button>
-    <button class="cat-btn" data-cat="business">Business</button>
-    <button class="cat-btn" data-cat="casual">Casual</button>
+  <!-- ЭКРАН ВЫБОРА ПОЛА (ПАРЕНЬ / ДЕВУШКА) -->
+  <div class="gender-screen" id="genderScreen">
+    <h1>✨ Кто ты? ✨</h1>
+    <div class="gender-buttons">
+      <button class="gender-btn gender-boy" id="boyBtn">
+        <span class="gender-emoji"></span>
+        Парень
+      </button>
+      <button class="gender-btn gender-girl" id="girlBtn">
+        <span class="gender-emoji"></span>
+        Девушка
+      </button>
+    </div>
   </div>
 
-  <!-- Кнопка "Начать" -->
-  <button class="start-btn" id="startBtn">Начать</button>
+  <!-- ЭКРАН ВЫБОРА СТИЛЕЙ (появляется после выбора пола) -->
+  <div class="style-screen" id="styleScreen">
+    <div class="selected-gender-badge" id="genderBadge"></div>
+    <div class="category-title" id="categoryTitle">Выбери стиль</div>
+    
+    <div class="categories" id="categories">
+      <button class="cat-btn" data-cat="street">Street Style</button>
+      <button class="cat-btn" data-cat="oldmoney">Old Money</button>
+      <button class="cat-btn" data-cat="minimal">Minimalist</button>
+      <button class="cat-btn" data-cat="business">Business</button>
+      <button class="cat-btn" data-cat="casual">Casual</button>
+    </div>
 
-  <!-- Основное приложение -->
-  <div class="app" id="app">
-    <div class="category-title" id="categoryTitle"></div>
     <img src="" alt="Outfit" class="outfit" id="outfitImg"/>
     
     <div class="actions">
@@ -208,77 +283,209 @@
     </div>
 
     <div class="links" id="links">
-      <div>Понравилось? Купи сейчас:</div>
+      <div>🎉 Понравилось? Купи сейчас:</div>
       <a href="#" target="_blank" id="link1">Ссылка 1</a>
       <a href="#" target="_blank" id="link2">Ссылка 2</a>
     </div>
+
+    <button class="back-btn" id="backBtn">← Сменить пол</button>
   </div>
 
   <script>
-    // Ты можешь заменить это на свой логотип
-    document.getElementById('logo').src = 'https://i.imgur.com/dY4gYtZ.png';
-
+    // База данных образов с разделением по полу и стилям
     const outfits = {
-      street: [
-        { img: 'https://via.placeholder.com/400x500/1abc9c/ffffff?text=Street+Style+1', links: ['https://example.com/street1', 'https://example.com/street2'] },
-        { img: 'https://via.placeholder.com/400x500/3498db/ffffff?text=Street+Style+2', links: ['https://example.com/street3', 'https://example.com/street4'] }
-      ],
-      oldmoney: [
-        { img: 'https://via.placeholder.com/400x500/e74c3c/ffffff?text=Old+Money+1', links: ['https://example.com/old1', 'https://example.com/old2'] },
-        { img: 'https://via.placeholder.com/400x500/f39c12/ffffff?text=Old+Money+2', links: ['https://example.com/old3', 'https://example.com/old4'] }
-      ],
-      minimal: [
-        { img: 'https://via.placeholder.com/400x500/9b59b6/ffffff?text=Minimal+1', links: ['https://example.com/min1', 'https://example.com/min2'] }
-      ],
-      business: [
-        { img: 'https://via.placeholder.com/400x500/2c3e50/ffffff?text=Business+1', links: ['https://example.com/bus1', 'https://example.com/bus2'] }
-      ],
-      casual: [
-        { img: 'https://via.placeholder.com/400x500/16a085/ffffff?text=Casual+1', links: ['https://example.com/cas1', 'https://example.com/cas2'] }
-      ]
+      boy: {
+        street: [
+          { img: 'https://via.placeholder.com/400x500/34495e/ffffff?text=BOY+Street+1', links: ['https://example.com/boy-street1', 'https://example.com/boy-street-buy1'] },
+          { img: 'https://via.placeholder.com/400x500/2c3e50/ffffff?text=BOY+Street+2', links: ['https://example.com/boy-street2', 'https://example.com/boy-street-buy2'] },
+          { img: 'https://via.placeholder.com/400x500/1abc9c/ffffff?text=BOY+Street+3', links: ['https://example.com/boy-street3', 'https://example.com/boy-street-buy3'] }
+        ],
+        oldmoney: [
+          { img: 'https://via.placeholder.com/400x500/8e44ad/ffffff?text=BOY+OldMoney+1', links: ['https://example.com/boy-old1', 'https://example.com/boy-old-buy1'] },
+          { img: 'https://via.placeholder.com/400x500/9b59b6/ffffff?text=BOY+OldMoney+2', links: ['https://example.com/boy-old2', 'https://example.com/boy-old-buy2'] }
+        ],
+        minimal: [
+          { img: 'https://via.placeholder.com/400x500/7f8c8d/ffffff?text=BOY+Minimal+1', links: ['https://example.com/boy-min1', 'https://example.com/boy-min-buy1'] },
+          { img: 'https://via.placeholder.com/400x500/95a5a6/ffffff?text=BOY+Minimal+2', links: ['https://example.com/boy-min2', 'https://example.com/boy-min-buy2'] }
+        ],
+        business: [
+          { img: 'https://via.placeholder.com/400x500/2c3e50/ffffff?text=BOY+Business+1', links: ['https://example.com/boy-bus1', 'https://example.com/boy-bus-buy1'] }
+        ],
+        casual: [
+          { img: 'https://via.placeholder.com/400x500/16a085/ffffff?text=BOY+Casual+1', links: ['https://example.com/boy-cas1', 'https://example.com/boy-cas-buy1'] },
+          { img: 'https://via.placeholder.com/400x500/27ae60/ffffff?text=BOY+Casual+2', links: ['https://example.com/boy-cas2', 'https://example.com/boy-cas-buy2'] }
+        ]
+      },
+      girl: {
+        street: [
+          { img: 'https://via.placeholder.com/400x500/e74c3c/ffffff?text=GIRL+Street+1', links: ['https://example.com/girl-street1', 'https://example.com/girl-street-buy1'] },
+          { img: 'https://via.placeholder.com/400x500/c0392b/ffffff?text=GIRL+Street+2', links: ['https://example.com/girl-street2', 'https://example.com/girl-street-buy2'] }
+        ],
+        oldmoney: [
+          { img: 'https://via.placeholder.com/400x500/f1c40f/ffffff?text=GIRL+OldMoney+1', links: ['https://example.com/girl-old1', 'https://example.com/girl-old-buy1'] },
+          { img: 'https://via.placeholder.com/400x500/f39c12/ffffff?text=GIRL+OldMoney+2', links: ['https://example.com/girl-old2', 'https://example.com/girl-old-buy2'] }
+        ],
+        minimal: [
+          { img: 'https://via.placeholder.com/400x500/bdc3c7/2c3e50?text=GIRL+Minimal+1', links: ['https://example.com/girl-min1', 'https://example.com/girl-min-buy1'] }
+        ],
+        business: [
+          { img: 'https://via.placeholder.com/400x500/3498db/ffffff?text=GIRL+Business+1', links: ['https://example.com/girl-bus1', 'https://example.com/girl-bus-buy1'] },
+          { img: 'https://via.placeholder.com/400x500/2980b9/ffffff?text=GIRL+Business+2', links: ['https://example.com/girl-bus2', 'https://example.com/girl-bus-buy2'] }
+        ],
+        casual: [
+          { img: 'https://via.placeholder.com/400x500/e67e22/ffffff?text=GIRL+Casual+1', links: ['https://example.com/girl-cas1', 'https://example.com/girl-cas-buy1'] }
+        ]
+      }
     };
 
+    let currentGender = null;      // 'boy' или 'girl'
     let currentOutfits = [];
     let currentIndex = 0;
-    let currentCategory = '';
+    let currentStyle = '';
 
-    document.getElementById('startBtn').addEventListener('click', () => {
-      document.getElementById('title').style.display = 'none';
-      document.getElementById('categories').style.display = 'none';
-      document.getElementById('startBtn').style.display = 'none';
-      document.getElementById('app').style.display = 'flex';
-    });
+    // DOM элементы
+    const genderScreen = document.getElementById('genderScreen');
+    const styleScreen = document.getElementById('styleScreen');
+    const genderBadge = document.getElementById('genderBadge');
+    const categoryTitle = document.getElementById('categoryTitle');
+    const outfitImg = document.getElementById('outfitImg');
+    const linksDiv = document.getElementById('links');
+    const link1 = document.getElementById('link1');
+    const link2 = document.getElementById('link2');
+    const backBtn = document.getElementById('backBtn');
 
+    // Функция переключения на экран выбора стиля (после выбора пола)
+    function selectGender(gender) {
+      currentGender = gender;
+      const genderName = gender === 'boy' ? 'Парень' : 'Девушка';
+      genderBadge.textContent = `Выбрано: ${genderName}`;
+      
+      // Показываем экран со стилями, скрываем выбор пола
+      genderScreen.style.display = 'none';
+      styleScreen.style.display = 'flex';
+      
+      // Сбрасываем выбранный стиль и образы
+      currentStyle = '';
+      currentOutfits = [];
+      categoryTitle.textContent = 'Выбери стиль ↓';
+      outfitImg.style.display = 'none';
+      linksDiv.style.display = 'none';
+      
+      // Небольшая анимация
+      styleScreen.style.animation = 'fadeIn 0.4s ease';
+    }
+
+    // Функция возврата к выбору пола
+    function backToGender() {
+      genderScreen.style.display = 'flex';
+      styleScreen.style.display = 'none';
+      currentGender = null;
+      currentStyle = '';
+      currentOutfits = [];
+      // Сброс картинки
+      outfitImg.style.display = 'none';
+      linksDiv.style.display = 'none';
+    }
+
+    // Обработчики кнопок пола
+    document.getElementById('boyBtn').addEventListener('click', () => selectGender('boy'));
+    document.getElementById('girlBtn').addEventListener('click', () => selectGender('girl'));
+    backBtn.addEventListener('click', backToGender);
+
+    // Выбор стиля (Street, Old money, Minimal и т.д.)
     document.querySelectorAll('.cat-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        currentCategory = btn.dataset.cat;
-        currentOutfits = outfits[currentCategory];
-        currentIndex = 0;
-        document.getElementById('categoryTitle').textContent = btn.textContent;
-        showOutfit();
+        if (!currentGender) {
+          alert('Сначала выбери парень или девушка!');
+          return;
+        }
+        
+        const styleKey = btn.dataset.cat;
+        currentStyle = styleKey;
+        
+        // Получаем образы для текущего пола и стиля
+        const genderData = outfits[currentGender];
+        if (genderData && genderData[styleKey]) {
+          currentOutfits = genderData[styleKey];
+          currentIndex = 0;
+          
+          // Обновляем заголовок
+          let styleDisplay = '';
+          switch(styleKey) {
+            case 'street': styleDisplay = 'Уличный стиль (Street)'; break;
+            case 'oldmoney': styleDisplay = 'Old Money'; break;
+            case 'minimal': styleDisplay = 'Минимализм'; break;
+            case 'business': styleDisplay = 'Бизнес стиль'; break;
+            case 'casual': styleDisplay = 'Кэжуал'; break;
+            default: styleDisplay = styleKey;
+          }
+          categoryTitle.innerHTML = `✨ ${styleDisplay} ✨`;
+          
+          // Показываем первый образ
+          showOutfit();
+          outfitImg.style.display = 'block';
+        } else {
+          console.error('Нет образов для:', currentGender, styleKey);
+          categoryTitle.innerHTML = 'Нет образов в этой категории :(';
+          outfitImg.style.display = 'none';
+        }
       });
     });
 
     function showOutfit() {
+      if (!currentOutfits.length || currentIndex >= currentOutfits.length) {
+        outfitImg.alt = 'Нет образов';
+        return;
+      }
       const outfit = currentOutfits[currentIndex];
-      document.getElementById('outfitImg').src = outfit.img;
-      document.getElementById('links').style.display = 'none';
+      outfitImg.src = outfit.img;
+      outfitImg.alt = 'Образ';
+      // Скрываем ссылки при смене образа
+      linksDiv.style.display = 'none';
     }
 
+    // Дизлайк - следующий образ
     document.getElementById('dislikeBtn').addEventListener('click', () => {
+      if (!currentOutfits.length) {
+        alert('Сначала выбери стиль!');
+        return;
+      }
       currentIndex = (currentIndex + 1) % currentOutfits.length;
-      document.getElementById('links').style.display = 'none';
       showOutfit();
     });
 
+    // Лайк - показываем ссылки на покупку
     document.getElementById('likeBtn').addEventListener('click', () => {
-      const links = document.getElementById('links');
+      if (!currentOutfits.length) {
+        alert('Сначала выбери стиль!');
+        return;
+      }
       const outfit = currentOutfits[currentIndex];
-      document.getElementById('link1').href = outfit.links[0];
-      document.getElementById('link2').href = outfit.links[1];
-      links.style.display = 'block';
+      if (outfit && outfit.links) {
+        link1.href = outfit.links[0];
+        link2.href = outfit.links[1];
+        linksDiv.style.display = 'block';
+        
+        // Добавляем маленькую анимацию для ссылок
+        linksDiv.style.animation = 'none';
+        setTimeout(() => { linksDiv.style.animation = 'fadeIn 0.3s ease'; }, 10);
+      } else {
+        alert('Ссылки временно недоступны');
+      }
     });
-  </script>
 
+    // Добавляем анимацию fadeIn
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .style-screen, .gender-screen {
+        animation: fadeIn 0.5s ease;
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
